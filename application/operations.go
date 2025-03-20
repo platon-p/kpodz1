@@ -25,6 +25,14 @@ type OperationService struct {
 	categoryRepository   CategoryRepository
 }
 
+func NewOperationService(operationsRepository OperationsRepository, accountRepository AccountRepository, categoryRepository CategoryRepository) *OperationService {
+	return &OperationService{
+		operationsRepository: operationsRepository,
+		accountRepository:    accountRepository,
+		categoryRepository:   categoryRepository,
+	}
+}
+
 func (s *OperationService) Perform(operation domain.Operation) (*domain.Operation, error) {
 	acc, err := s.accountRepository.Find(operation.Id)
 	if err != nil {
