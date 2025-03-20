@@ -1,13 +1,14 @@
 package main
 
 import (
-	"github.com/platon-p/kpodz1/application"
+	"errors"
 	"github.com/platon-p/kpodz1/cmd"
 	"github.com/platon-p/kpodz1/cmd/account"
 	"github.com/platon-p/kpodz1/cmd/category"
 	"github.com/platon-p/kpodz1/cmd/operation"
 	"github.com/platon-p/kpodz1/domain"
 	"github.com/platon-p/kpodz1/infra"
+	"github.com/platon-p/kpodz1/services"
 )
 
 type Dic struct {
@@ -17,10 +18,10 @@ func (d *Dic) Create() cmd.Command {
 	accRepo := infra.NewInMemoryAccountRepository([]domain.BankAccount{})
 	operationRepo := infra.NewInMemoryOperationRepository([]domain.Operation{})
 	categoryRepo := infra.NewInMemoryCategoryRepository([]domain.Category{})
-	accountService := application.NewAccountsService(accRepo, operationRepo)
+	accountService := services.NewAccountsService(accRepo, operationRepo)
 
-	operationService := application.NewOperationService(operationRepo, accRepo, categoryRepo)
-	categoryService := application.NewCategoryService(categoryRepo)
+	operationService := services.NewOperationService(operationRepo, accRepo, categoryRepo)
+	categoryService := services.NewCategoryService(categoryRepo)
 
 	accountCmd := &cmd.GroupCmd{Commands: []cmd.NamedCommand{
 		cmd.Named(&account.CreateAccountCmd{Service: accountService}, "Создать счёт"),
@@ -47,7 +48,7 @@ func (d *Dic) Create() cmd.Command {
 		cmd.Named(cmd.Wrap(operationCmd), "Операции"),
 		cmd.Named(cmd.Wrap(categoryCmd), "Категории"),
 		cmd.Named(cmd.NewSimpleCmd(func() error {
-			return nil
+			return errors.New("exit")
 		}), "Выйти"),
 	}}
 	mainCmd := cmd.LoopCmd{Parent: mainGroup}

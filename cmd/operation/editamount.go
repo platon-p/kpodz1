@@ -2,11 +2,12 @@ package operation
 
 import (
 	"fmt"
-	"github.com/platon-p/kpodz1/application"
+	"github.com/platon-p/kpodz1/services"
+	"github.com/platon-p/kpodz1/utils"
 )
 
 type EditOperationAmountCmd struct {
-	Service *application.OperationService
+	Service *services.OperationService
 }
 
 func (c *EditOperationAmountCmd) Execute() error {
@@ -24,6 +25,6 @@ func (c *EditOperationAmountCmd) Execute() error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(op)
+	fmt.Println("Операция изменена: ", utils.PrettyOperation(op))
 	return nil
 }

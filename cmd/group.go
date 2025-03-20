@@ -30,8 +30,7 @@ func (n *NamedCommandImpl) String() string {
 }
 
 type GroupCmd struct {
-	Commands  []NamedCommand
-	ExitLabel string
+	Commands []NamedCommand
 }
 
 func (c *GroupCmd) Execute() error {

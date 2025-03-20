@@ -3,13 +3,13 @@ package account
 import (
 	"bufio"
 	"fmt"
-	"github.com/platon-p/kpodz1/application"
+	"github.com/platon-p/kpodz1/services"
 	"os"
 	"strings"
 )
 
 type EditAccountNameCmd struct {
-	Service *application.AccountsService
+	Service *services.AccountsService
 }
 
 func (c *EditAccountNameCmd) Execute() error {

@@ -2,11 +2,11 @@ package account
 
 import (
 	"fmt"
-	"github.com/platon-p/kpodz1/application"
+	"github.com/platon-p/kpodz1/services"
 )
 
 type DeleteAccountCmd struct {
-	Service *application.AccountsService
+	Service *services.AccountsService
 }
 
 func (c *DeleteAccountCmd) Execute() error {

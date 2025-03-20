@@ -3,21 +3,20 @@ package operation
 import (
 	"bufio"
 	"fmt"
-	"github.com/platon-p/kpodz1/application"
 	"github.com/platon-p/kpodz1/domain"
+	"github.com/platon-p/kpodz1/services"
 	"os"
 	"strings"
 	"time"
 )
 
 type CreateOperationCmd struct {
-	Service *application.OperationService
+	Service *services.OperationService
 }
 
 func (c *CreateOperationCmd) Execute() error {
 	const layout = time.DateTime
 	op, err := scanOperation(layout)
-	fmt.Printf("%#v\n", op)
 	_, err = c.Service.Perform(op)
 	return err
 }

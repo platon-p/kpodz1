@@ -2,11 +2,11 @@ package category
 
 import (
 	"fmt"
-	"github.com/platon-p/kpodz1/application"
+	"github.com/platon-p/kpodz1/services"
 )
 
 type DeleteCategoryCmd struct {
-	Service *application.CategoryService
+	Service *services.CategoryService
 }
 
 func (c *DeleteCategoryCmd) Execute() error {

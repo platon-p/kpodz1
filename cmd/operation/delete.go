@@ -2,11 +2,11 @@ package operation
 
 import (
 	"fmt"
-	"github.com/platon-p/kpodz1/application"
+	"github.com/platon-p/kpodz1/services"
 )
 
 type DeleteOperationCmd struct {
-	Service *application.OperationService
+	Service *services.OperationService
 }
 
 func (c *DeleteOperationCmd) Execute() error {

@@ -3,13 +3,13 @@ package category
 import (
 	"bufio"
 	"fmt"
-	"github.com/platon-p/kpodz1/application"
+	"github.com/platon-p/kpodz1/services"
 	"os"
 	"strings"
 )
 
 type EditCategoryNameCmd struct {
-	Service *application.CategoryService
+	Service *services.CategoryService
 }
 
 func (c *EditCategoryNameCmd) Execute() error {

@@ -2,11 +2,12 @@ package account
 
 import (
 	"fmt"
-	"github.com/platon-p/kpodz1/application"
+	"github.com/platon-p/kpodz1/services"
+	"github.com/platon-p/kpodz1/utils"
 )
 
 type GetAllAccountsCmd struct {
-	Service *application.AccountsService
+	Service *services.AccountsService
 }
 
 func (c *GetAllAccountsCmd) Execute() error {
@@ -14,6 +15,13 @@ func (c *GetAllAccountsCmd) Execute() error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(res, len(res))
+	if len(res) == 0 {
+		fmt.Println("Пустой список")
+		return nil
+	}
+	fmt.Println(utils.BankAccountTitle())
+	for i := range res {
+		fmt.Println(utils.PrettyBankAccount(res[i]))
+	}
 	return nil
 }

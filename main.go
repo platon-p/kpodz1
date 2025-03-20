@@ -1,6 +1,7 @@
 package main
 
 func main() {
-	cmd := (&Dic{}).Create()
+	dic := &Dic{}
+	cmd := dic.Create()
 	_ = cmd.Execute()
 }

@@ -2,8 +2,8 @@ package infra
 
 import (
 	"errors"
-	"github.com/platon-p/kpodz1/application"
 	"github.com/platon-p/kpodz1/domain"
+	"github.com/platon-p/kpodz1/services"
 	"slices"
 )
 
@@ -12,7 +12,7 @@ var (
 	ErrAccountExists   = errors.New("account already exists")
 )
 
-var _ application.AccountRepository = (*InMemoryAccountRepository)(nil)
+var _ services.AccountRepository = (*InMemoryAccountRepository)(nil)
 
 type InMemoryAccountRepository struct {
 	data []domain.BankAccount

@@ -2,11 +2,12 @@ package operation
 
 import (
 	"fmt"
-	"github.com/platon-p/kpodz1/application"
+	"github.com/platon-p/kpodz1/services"
+	"github.com/platon-p/kpodz1/utils"
 )
 
 type GetAllOperationsCmd struct {
-	Service *application.OperationService
+	Service *services.OperationService
 }
 
 func (c *GetAllOperationsCmd) Execute() error {
@@ -18,8 +19,9 @@ func (c *GetAllOperationsCmd) Execute() error {
 		fmt.Println("Пустой список")
 		return nil
 	}
+	fmt.Println(utils.OperationTitle())
 	for i := range res {
-		fmt.Println(res[i])
+		fmt.Println(utils.PrettyOperation(res[i]))
 	}
 	return nil
 }

@@ -1,4 +1,4 @@
-package application
+package services
 
 import (
 	"github.com/platon-p/kpodz1/domain"

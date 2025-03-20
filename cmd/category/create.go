@@ -3,34 +3,46 @@ package category
 import (
 	"bufio"
 	"fmt"
-	"github.com/platon-p/kpodz1/application"
 	"github.com/platon-p/kpodz1/domain"
+	"github.com/platon-p/kpodz1/services"
+	"github.com/platon-p/kpodz1/utils"
 	"os"
 	"strings"
 )
 
 type CreateCategoryCmd struct {
-	Service *application.CategoryService
+	Service *services.CategoryService
 }
 
 func (c *CreateCategoryCmd) Execute() error {
-	fmt.Printf("Введите тип категории (%s/%s): ", domain.IncomeCategoryType, domain.OutcomeCategoryType)
-	rd := bufio.NewReader(os.Stdin)
-	categoryTypeStr, err := rd.ReadString('\n')
+	category, err := scanCategory()
 	if err != nil {
 		return err
 	}
+	res, err := c.Service.Create(category.CategoryType, category.Name)
+	if err != nil {
+		return err
+	}
+	fmt.Printf("Категория создана: %s\n", utils.PrettyCategory(res))
+	return nil
+}
+
+func scanCategory() (domain.Category, error) {
+	rd := bufio.NewReader(os.Stdin)
+
+	fmt.Printf("Введите тип категории (%s/%s): ", domain.IncomeCategoryType, domain.OutcomeCategoryType)
+	categoryTypeStr, err := rd.ReadString('\n')
+	if err != nil {
+		return domain.Category{}, err
+	}
 	categoryTypeStr = strings.TrimSuffix(categoryTypeStr, "\n")
+
 	fmt.Printf("Введите название категории: ")
 	name, err := rd.ReadString('\n')
 	if err != nil {
-		return err
+		return domain.Category{}, err
 	}
 	name = strings.TrimSuffix(name, "\n")
-	res, err := c.Service.Create(domain.CategoryType(categoryTypeStr), name)
-	if err != nil {
-		return err
-	}
-	fmt.Printf("Категория создана: %v\n", res)
-	return nil
+
+	return domain.Category{CategoryType: domain.CategoryType(categoryTypeStr), Name: name}, nil
 }

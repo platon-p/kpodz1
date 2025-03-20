@@ -2,11 +2,12 @@ package category
 
 import (
 	"fmt"
-	"github.com/platon-p/kpodz1/application"
+	"github.com/platon-p/kpodz1/services"
+	"github.com/platon-p/kpodz1/utils"
 )
 
 type GetAllCategoriesCmd struct {
-	Service *application.CategoryService
+	Service *services.CategoryService
 }
 
 func (c *GetAllCategoriesCmd) Execute() error {
@@ -18,8 +19,9 @@ func (c *GetAllCategoriesCmd) Execute() error {
 		fmt.Println("Пустой список")
 		return nil
 	}
+	fmt.Println(utils.CategoryTitle())
 	for _, category := range categories {
-		fmt.Println(category)
+		fmt.Println(utils.PrettyCategory(category))
 	}
 	return nil
 }

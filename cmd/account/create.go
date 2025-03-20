@@ -3,13 +3,14 @@ package account
 import (
 	"bufio"
 	"fmt"
-	"github.com/platon-p/kpodz1/application"
+	"github.com/platon-p/kpodz1/services"
+	"github.com/platon-p/kpodz1/utils"
 	"os"
 	"strings"
 )
 
 type CreateAccountCmd struct {
-	Service *application.AccountsService
+	Service *services.AccountsService
 }
 
 func (c *CreateAccountCmd) Execute() error {
@@ -23,6 +24,6 @@ func (c *CreateAccountCmd) Execute() error {
 	if err != nil {
 		return err
 	}
-	fmt.Println("Счёт создан: ", created)
+	fmt.Println("Счёт создан: \n", utils.PrettyBankAccount(created))
 	return nil
 }

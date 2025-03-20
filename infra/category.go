@@ -2,8 +2,8 @@ package infra
 
 import (
 	"errors"
-	"github.com/platon-p/kpodz1/application"
 	"github.com/platon-p/kpodz1/domain"
+	"github.com/platon-p/kpodz1/services"
 	"slices"
 )
 
@@ -11,7 +11,7 @@ var (
 	ErrCategoryNotFound = errors.New("category not found")
 )
 
-var _ application.CategoryRepository = (*InMemoryCategoryRepository)(nil)
+var _ services.CategoryRepository = (*InMemoryCategoryRepository)(nil)
 
 type InMemoryCategoryRepository struct {
 	data []domain.Category
