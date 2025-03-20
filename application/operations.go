@@ -9,6 +9,7 @@ import (
 var (
 	ErrCategoryOperationMatch = errors.New("category and operation types does not match")
 	ErrBadOperationType       = errors.New("bad operation type")
+	ErrBadAmount              = errors.New("non-positive amount")
 )
 
 type OperationsRepository interface {
@@ -34,7 +35,10 @@ func NewOperationService(operationsRepository OperationsRepository, accountRepos
 }
 
 func (s *OperationService) Perform(operation domain.Operation) (*domain.Operation, error) {
-	acc, err := s.accountRepository.Find(operation.Id)
+	if err := validateAmount(operation.Amount); err != nil {
+		return nil, err
+	}
+	acc, err := s.accountRepository.Find(operation.BankAccountId)
 	if err != nil {
 		return nil, err
 	}
@@ -72,4 +76,26 @@ func validateTypeMatch(category domain.CategoryType, operation domain.OperationT
 		return true
 	}
 	return false
+}
+
+func (s *OperationService) GetAll() ([]domain.Operation, error) {
+	return s.operationsRepository.GetAll()
+}
+
+func (s *OperationService) EditAmount(id uint32, newAmount float64) (domain.Operation, error) {
+	if err := validateAmount(newAmount); err != nil {
+		return domain.Operation{}, err
+	}
+	return s.operationsRepository.EditAmount(id, newAmount)
+}
+
+func (s *OperationService) Delete(id uint32) error {
+	return s.operationsRepository.Delete(id)
+}
+
+func validateAmount(amount float64) error {
+	if amount <= 0 {
+		return ErrBadAmount
+	}
+	return nil
 }

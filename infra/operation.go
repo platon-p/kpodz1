@@ -2,6 +2,7 @@ package infra
 
 import (
 	"errors"
+	"github.com/platon-p/kpodz1/application"
 	"github.com/platon-p/kpodz1/domain"
 	"slices"
 )
@@ -9,6 +10,8 @@ import (
 var (
 	ErrOperationNotFound = errors.New("operation not found")
 )
+
+var _ application.OperationsRepository = (*InMemoryOperationRepository)(nil)
 
 type InMemoryOperationRepository struct {
 	data []domain.Operation

@@ -1,13 +1,7 @@
 package application
 
 import (
-	"errors"
-
 	"github.com/platon-p/kpodz1/domain"
-)
-
-var (
-	ErrBadAmount = errors.New("nonpositive amount")
 )
 
 type AccountsService struct {

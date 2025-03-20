@@ -1,6 +1,8 @@
-package main
+package cmd
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type NamedCommand interface {
 	Command
@@ -28,7 +30,8 @@ func (n *NamedCommandImpl) String() string {
 }
 
 type GroupCmd struct {
-	Commands []NamedCommand
+	Commands  []NamedCommand
+	ExitLabel string
 }
 
 func (c *GroupCmd) Execute() error {
@@ -53,4 +56,14 @@ func (c *GroupCmd) selector() (Command, error) {
 		return nil, fmt.Errorf("out of range")
 	}
 	return c.Commands[id-1], nil
+}
+
+type SimpleCmd struct{ fun func() error }
+
+func NewSimpleCmd(fun func() error) *SimpleCmd {
+	return &SimpleCmd{fun: fun}
+}
+
+func (e *SimpleCmd) Execute() error {
+	return e.fun()
 }
