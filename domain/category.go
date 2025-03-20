@@ -3,12 +3,12 @@ package domain
 type CategoryType string
 
 const (
-	IncomeCategoryType  CategoryType = "Доход"
-	OutcomeCategoryType CategoryType = "Расход"
+	IncomeCategoryType  CategoryType = "income"
+	OutcomeCategoryType CategoryType = "outcome"
 )
 
 type Category struct {
-	id           uint32
-	categoryType CategoryType
-	name         string
+	Id           uint32
+	CategoryType CategoryType
+	Name         string
 }
